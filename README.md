@@ -156,6 +156,29 @@ Key endpoints include:
 
 ## Testing
 
+### Choosing the Right Test Type
+
+**Unit Tests** (`DevHabit.UnitTests`):
+
+- Test individual components in isolation (services, validators, utilities)
+- Mock external dependencies (database, HTTP clients, external APIs)
+- Fast execution, should run in milliseconds
+- Example: Testing a validator, service method, or utility function
+
+**Integration Tests** (`DevHabit.IntegrationTests`):
+
+- Test interactions between components (database operations, service-to-service communication)
+- Use real database connection and external services
+- Medium execution time, test complete workflows within subsystems
+- Example: Testing API endpoints with database persistence, but not full HTTP requests
+
+**Functional Tests** (`DevHabit.FunctionalTests`):
+
+- Test end-to-end scenarios through the full HTTP stack
+- Use real database and all external dependencies
+- Slowest execution, validate complete user journeys
+- Example: Testing user registration, login, and habit creation through API endpoints
+
 ### Backend Tests
 
 From the `DevHabit` directory:
@@ -164,21 +187,20 @@ From the `DevHabit` directory:
 # Run all tests
 dotnet test DevHabit.sln
 
-# Run unit tests only
-dotnet test DevHabit.UnitTests
+# Run specific test types
+dotnet test DevHabit.UnitTests        # Fast, isolated component tests
+dotnet test DevHabit.IntegrationTests # Medium, component integration tests
+dotnet test DevHabit.FunctionalTests  # Slow, end-to-end API tests
 
-# Run integration tests
-dotnet test DevHabit.IntegrationTests
-
-# Run functional tests
-dotnet test DevHabit.FunctionalTests
+# Run with coverage (requires dotnet-coverage tool)
+dotnet-coverage collect "dotnet test DevHabit.sln" -f cobertura -o coverage.xml
 ```
 
 ### Frontend Tests
 
 ```bash
 cd client/devhabit-ui
-npm run lint
+npm run lint  # Static analysis and basic checks
 ```
 
 ## Deployment
